@@ -1,0 +1,248 @@
+# teochew.schema.yaml
+# vim: set sw=2 sts=2 et:
+# encoding: utf-8
+
+schema:
+  schema_id: tieswa
+  name: 潮汕白字
+  version: "2025.03.17"
+  author:
+    - Tân-Tsì-Hâm <harold726@qq.com>
+  description: |
+    潮汕话输入方案，由白话字（Pêh-uē-jī）改编而来。
+    输入法的设置参考了hokkien-writing的开源项目：https://github.com/hokkien-writing/rime-teochew
+  dependencies:
+    # - teochew_mandarin
+    - luna_pinyin
+
+switches:
+  - name: ascii_mode
+    reset: 0
+    states: [ 中文, ABC ]
+  - name: ascii_punct
+    states: [ 。，, ．， ]
+  - name: simplification
+    states: [ 漢字, 汉字 ]
+  - name: full_shape
+    states: [ 半角, 全角 ]
+
+engine:
+  processors:
+    - ascii_composer
+    - recognizer
+    - key_binder
+    - speller
+    - punctuator
+    - selector
+    - navigator
+    - express_editor
+  segmentors:
+    - ascii_segmentor
+    - matcher
+    - abc_segmentor
+    - punct_segmentor
+    - fallback_segmentor
+  translators:
+    - punct_translator
+    - script_translator
+    - reverse_lookup_translator
+  filters:
+    - simplifier
+    - uniquifier
+
+speller:
+  alphabet: "pbmtnlkghzcsjPBMTNLKGHZCSJaoeiurAOEIURdfvwxyFVDWXYQq890"
+  initials: "pbmtnlkghzcsjPBMTNLKGHZCSJaoeiurAOEIURdfvwxyFVDWXYQq"
+  # finals: "890"
+  delimiter: " -"
+  use_space: false
+  auto_select: false
+  algebra:
+    # - "erase/^xx$/"
+  # 无声调输入
+    - derive/([a-zA-Z])000/$1/
+    - derive/([a-zA-Z])009/$1/
+    - derive/([a-zA-Z])090/$1/
+    - derive/([a-zA-Z])099/$1/
+    - derive/([a-zA-Z])900/$1/
+    - derive/([a-zA-Z])909/$1/
+    - derive/([a-zA-Z])990/$1/
+    - derive/([a-zA-Z])999/$1/
+    - derive/([a-zA-Z])80/$1/
+    - derive/([a-zA-Z])88/$1/
+    # - "derive/^ch(i|e)/ts$1/"
+    # - "derive/^chh(i|e)/tsh$1/"
+    # - "derive/^j(i|e)/z$1/"
+    # - "derive/au/ao"
+    # - "derive/ua/oa"
+    # - "derive/ue/oe"
+    - "derive/iam$/iem"
+    - "derive/^l(iem|iam|am)$/n$1/" # n,l
+    - "derive/iap$/iep"
+    - "derive/iau$/iou"
+    - "derive/ua(n|t)$/ue$1"
+    - "derive/(i|y)e(x|h)$/$1io$2"
+    - "derive/ia(n|t|d)$/ie$1"
+    - "derive/ie$/io"
+    - "derive/o(y)$/a$1"
+    - "derive/(a|o|e|i|u|r)n$/$1ng"
+    - "derive/(a|o|e|i|u|r)t$/$1k"
+    - "derive/(a|o|e|i|u|r)d$/$1g"
+    - "derive/(a|o|e|i|u|r)(n|m)$/$1ng"
+    - "derive/(a|o|e|i|u|r)(p|t)$/$1k"
+    - "derive/(a|o|e|i|u|r)(b|d)$/$1g"
+    - "abbrev/^([a-z]).+$/$1/" # 簡拼
+    - "abbrev/^(ts|ch).+$/$1/" # 簡拼
+
+translator:
+  dictionary: tieswa
+  spelling_hints: 10  # 3字內標註完整帶調音碼
+  prism: tieswa_han
+  enable_sentence: false
+  enable_completion: false
+  enable_user_dict: true
+  preedit_format:
+  # 不要轻易使用开头^和结尾$，因为你处理的是音节，写词的时候很多音节的头尾都在中间(存疑)
+  # 优先级问题：多字符的必须放上面！
+  # 有个问题，词典里没有的音节它不会自动合成符号。所以，需要把所有音节都录一遍。但我现在有点懒……
+    - xform/a((r|i|u|y|w|m|n|ng|R|I|U|Y|W|M|N|NG|Ng|nG|))000/a$1/
+    - xform/a((r|i|u|y|w|m|n|ng|R|I|U|Y|W|M|N|NG|Ng|nG|))009/á$1/
+    - xform/a((r|i|u|y|w|m|n|ng|R|I|U|Y|W|M|N|NG|Ng|nG|))090/à$1/
+    - xform/a((r|R|)(h|x|p|t|k|b|d|g|H|X|P|T|K|B|D|G))099/a$1/
+    - xform/a((r|i|u|y|w|m|n|ng|R|I|U|Y|W|M|N|NG|Ng|nG|))900/â$1/
+    - xform/a((r|i|u|y|w|m|n|ng|R|I|U|Y|W|M|N|NG|Ng|nG|))909/ǎ$1/
+    - xform/a((r|i|u|y|w|m|n|ng|R|I|U|Y|W|M|N|NG|Ng|nG|))990/ā$1/
+    - xform/a((r|R|)(h|x|p|t|k|b|d|g|H|X|P|T|K|B|D|G))999/a$1/
+    - xform/a((r|i|u|y|w|m|n|ng|R|I|U|Y|W|M|N|NG|Ng|nG|))80/ā$1h/ # 轻声暂时这样处理
+
+    - xform/o((r|i|u|y|w|m|n|ng|R|I|U|Y|W|M|N|NG|Ng|nG|))000/o$1/
+    - xform/o((r|i|u|y|w|m|n|ng|R|I|U|Y|W|M|N|NG|Ng|nG|))009/ó$1/
+    - xform/o((r|i|u|y|w|m|n|ng|R|I|U|Y|W|M|N|NG|Ng|nG|))090/ò$1/
+    - xform/o((r|R|)(h|x|p|t|k|b|d|g|H|X|P|T|K|B|D|G))099/o$1/
+    - xform/o((r|i|u|y|w|m|n|ng|R|I|U|Y|W|M|N|NG|Ng|nG|))900/ô$1/
+    - xform/o((r|i|u|y|w|m|n|ng|R|I|U|Y|W|M|N|NG|Ng|nG|))909/ǒ$1/
+    - xform/o((r|i|u|y|w|m|n|ng|R|I|U|Y|W|M|N|NG|Ng|nG|))990/ō$1/
+    - xform/o((r|R|)(h|x|p|t|k|b|d|g|H|X|P|T|K|B|D|G))999/o$1/
+    - xform/o((r|i|u|y|w|m|n|ng|R|I|U|Y|W|M|N|NG|Ng|nG|))80/ō$1h/
+
+    - xform/e((r|i|u|y|w|m|n|ng|R|I|U|Y|W|M|N|NG|Ng|nG|))000/e$1/
+    - xform/e((r|i|u|y|w|m|n|ng|R|I|U|Y|W|M|N|NG|Ng|nG|))009/é$1/
+    - xform/e((r|i|u|y|w|m|n|ng|R|I|U|Y|W|M|N|NG|Ng|nG|))090/è$1/
+    - xform/e((r|R|)(h|x|p|t|k|b|d|g|H|X|P|T|K|B|D|G))099/e$1/
+    - xform/e((r|i|u|y|w|m|n|ng|R|I|U|Y|W|M|N|NG|Ng|nG|))900/ê$1/
+    - xform/e((r|i|u|y|w|m|n|ng|R|I|U|Y|W|M|N|NG|Ng|nG|))909/ě$1/
+    - xform/e((r|i|u|y|w|m|n|ng|R|I|U|Y|W|M|N|NG|Ng|nG|))990/ē$1/
+    - xform/e((r|R|)(h|x|p|t|k|b|d|g|H|X|P|T|K|B|D|G))999/e$1/
+    - xform/e((r|i|u|y|w|m|n|ng|R|I|U|Y|W|M|N|NG|Ng|nG|))80/ē$1h/
+
+    - xform/i((m|n|ng|M|N|NG|Ng|nG|))000/i$1/
+    - xform/i((m|n|ng|M|N|NG|Ng|nG|))009/í$1/
+    - xform/i((m|n|ng|M|N|NG|Ng|nG|))090/ì$1/
+    - xform/i((h|x|p|t|k|b|d|g|H|X|P|T|K|B|D|G))099/i$1/
+    - xform/i((m|n|ng|M|N|NG|Ng|nG|))900/î$1/
+    - xform/i((m|n|ng|M|N|NG|Ng|nG|))909/ǐ$1/
+    - xform/i((m|n|ng|M|N|NG|Ng|nG|))990/ī$1/
+    - xform/i((h|x|p|t|k|b|d|g|H|X|P|T|K|B|D|G))999/i$1/
+    - xform/i((m|n|ng|M|N|NG|Ng|nG|))80/ī$1h/
+
+    - xform/u((m|n|ng|M|N|NG|Ng|nG|))000/u$1/
+    - xform/u((m|n|ng|M|N|NG|Ng|nG|))009/ú$1/
+    - xform/u((m|n|ng|M|N|NG|Ng|nG|))090/ù$1/
+    - xform/u((h|x|p|t|k|b|d|g|H|X|P|T|K|B|D|G))099/u$1/
+    - xform/u((m|n|ng|M|N|NG|Ng|nG|))900/û$1/
+    - xform/u((m|n|ng|M|N|NG|Ng|nG|))909/ǔ$1/
+    - xform/u((m|n|ng|M|N|NG|Ng|nG|))990/ū$1/
+    - xform/u((h|x|p|t|k|b|d|g|H|X|P|T|K|B|D|G))999/u$1/
+    - xform/u((m|n|ng|M|N|NG|Ng|nG|))80/ū$1h/
+
+    - xform/ir((m|n|ng|M|N|NG|Ng|nG|))000/ir$1/
+    - xform/ir((m|n|ng|M|N|NG|Ng|nG|))009/ír$1/
+    - xform/ir((m|n|ng|M|N|NG|Ng|nG|))090/ìr$1/
+    - xform/ir((h|x|p|t|k|b|d|g|H|X|P|T|K|B|D|G))099/ir$1/
+    - xform/ir((m|n|ng|M|N|NG|Ng|nG|))900/îr$1/
+    - xform/ir((m|n|ng|M|N|NG|Ng|nG|))909/ǐr$1/
+    - xform/ir((m|n|ng|M|N|NG|Ng|nG|))990/īr$1/
+    - xform/ir((h|x|p|t|k|b|d|g|H|X|P|T|K|B|D|G))999/ir$1/
+    - xform/ir((m|n|ng|M|N|NG|Ng|nG|))80/īr$1h/
+  comment_format:
+  # 担心初学者对于认调号有困难，所以备注里没必要标调，而是写数字/按键
+    # 汉语
+    - xform/000/¹/
+    - xform/009/²/
+    - xform/090/³/
+    - xform/099/⁴/
+    - xform/900/⁵/
+    - xform/909/⁶/
+    - xform/990/⁷/
+    - xform/999/⁸/
+    - xform/80/⁰/
+  # initial_quality: 0.5
+
+recognizer:
+  # import_preset: default
+  patterns:
+    punct: "^/([0-9]0?|[a-z]+)$"
+    pinyin_lookup: "^f[a-z]*'?$"
+    mandarin_lookup: "^v[a-z]*'?$"
+
+# mandarin_reverse_lookup:
+#   tag: mandarin_lookup
+#   dictionary: teochew_mandarin
+#   prefix: "v"
+#   suffix: "'"
+#   tips: "〔地道用詞查詢〕"
+#   enable_completion: false
+#   enable_sentence: false
+#   preedit_format:
+#     - xform/([nljqxy])v/$1ü/
+
+reverse_lookup:
+  # tag: pinyin_lookup
+  dictionary: luna_pinyin
+  prefix: "`"
+  suffix: "'"
+  # tips: "〔潮州音查詢〕"
+  # enable_completion: false
+  # enable_sentence: false
+  preedit_format:
+    - xform/([nljqxy])v/$1ü/
+  comment_format:
+    # 汉语
+    - xform/000/¹/
+    - xform/009/²/
+    - xform/090/³/
+    - xform/099/⁴/
+    - xform/900/⁵/
+    - xform/909/⁶/
+    - xform/990/⁷/
+    - xform/999/⁸/
+    - xform/80/⁰/
+
+punctuator:
+  import_preset: default
+
+key_binder:
+  import_preset: default
+  bindings:
+    - { when: paging, accept: KP_Page_Up, send: Page_Up }
+    - { when: has_menu, accept: KP_Page_Down, send: Page_Down }
+    # 聲調的快捷鍵“操作可爲以下任意一個：send輸出按鍵、toggle切換開關、send_sequence輸出一串按鍵、set_option開某多選開關、unset_option關某多選開關、select選候選字”
+    - { when: composing, accept: KP_1, send_sequence: 000 }
+    - { when: composing, accept: KP_2, send_sequence: 009 }
+    - { when: composing, accept: KP_3, send_sequence: 090 }
+    - { when: composing, accept: KP_4, send_sequence: 099 }
+    - { when: composing, accept: KP_5, send_sequence: 900 }
+    - { when: composing, accept: KP_6, send_sequence: 909 }
+    - { when: composing, accept: KP_7, send_sequence: 990 }
+    - { when: composing, accept: KP_8, send_sequence: 999 }
+    - { when: composing, accept: KP_9, send_sequence: 80 }
+    - { when: composing, accept: KP_0, send_sequence: 80 }
+
+menu:
+  page_size: 7
+  alternative_select_keys: "1234567"
+
+style:
+  horizontal: false
+  # candidate_list_layout: linear
+
