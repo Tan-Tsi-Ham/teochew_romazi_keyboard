@@ -54,7 +54,7 @@ speller:
   alphabet: "pbmtnlkghzcsjPBMTNLKGHZCSJaoeiurAOEIURdfvwxyFVDWXYQq890"
   initials: "pbmtnlkghzcsjPBMTNLKGHZCSJaoeiurAOEIURdfvwxyFVDWXYQq"
   # finals: "890"
-  delimiter: " -"
+  delimiter: "'"
   use_space: false
   auto_select: false
   algebra:
@@ -85,14 +85,11 @@ speller:
     - "derive/ia(n|t|d)$/ie$1"
     - "derive/ie$/io"
     - "derive/o(y)$/a$1"
-    - "derive/(a|o|e|i|u|r)n$/$1ng"
-    - "derive/(a|o|e|i|u|r)t$/$1k"
-    - "derive/(a|o|e|i|u|r)d$/$1g"
     - "derive/(a|o|e|i|u|r)(n|m)$/$1ng"
     - "derive/(a|o|e|i|u|r)(p|t)$/$1k"
     - "derive/(a|o|e|i|u|r)(b|d)$/$1g"
     - "abbrev/^([a-z]).+$/$1/" # 簡拼
-    - "abbrev/^(ts|ch).+$/$1/" # 簡拼
+    - "abbrev/^(ts|ch|ph|th|ng).+$/$1/" # 簡拼
 
 translator:
   dictionary: tieswa
@@ -179,29 +176,17 @@ translator:
   # initial_quality: 0.5
 
 recognizer:
-  # import_preset: default
+  import_preset: default
   patterns:
     punct: "^/([0-9]0?|[a-z]+)$"
-    pinyin_lookup: "^f[a-z]*'?$"
-    mandarin_lookup: "^v[a-z]*'?$"
-
-# mandarin_reverse_lookup:
-#   tag: mandarin_lookup
-#   dictionary: teochew_mandarin
-#   prefix: "v"
-#   suffix: "'"
-#   tips: "〔地道用詞查詢〕"
-#   enable_completion: false
-#   enable_sentence: false
-#   preedit_format:
-#     - xform/([nljqxy])v/$1ü/
+    reverse_lookup: "`[a-z]*'?$"
 
 reverse_lookup:
   # tag: pinyin_lookup
   dictionary: luna_pinyin
   prefix: "`"
   suffix: "'"
-  # tips: "〔潮州音查詢〕"
+  tips: "〔拼音〕"
   # enable_completion: false
   # enable_sentence: false
   preedit_format:
@@ -235,8 +220,8 @@ key_binder:
     - { when: composing, accept: KP_6, send_sequence: 909 }
     - { when: composing, accept: KP_7, send_sequence: 990 }
     - { when: composing, accept: KP_8, send_sequence: 999 }
-    - { when: composing, accept: KP_9, send_sequence: 80 }
-    - { when: composing, accept: KP_0, send_sequence: 80 }
+    - { when: composing, accept: KP_9, send_sequence: 890 }
+    - { when: composing, accept: KP_0, send_sequence: 098 }
 
 menu:
   page_size: 7
