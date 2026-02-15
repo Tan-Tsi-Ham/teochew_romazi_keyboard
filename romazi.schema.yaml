@@ -1,0 +1,436 @@
+# romazi.schema.yaml
+# vim: set sw=2 sts=2 et:
+# encoding: utf-8
+
+schema:
+  schema_id: romazi
+  name: 潮语罗马字
+  version: "2026.02.14"
+  author:
+    - Tân Tsì-hâm (harold726@qq.com)
+  description: |
+    潮汕話羅馬字輸入法
+    輸入羅馬字，輸出羅馬字和漢字
+    支持聲調索引
+    改編自：https://github.com/hokkien-writing/rime-teochew
+  dependencies:
+    # - teochew_mandarin
+    - luna_pinyin
+
+switches:
+  - name: ascii_mode
+    reset: 0
+    states: [ 中文, ABC ]
+  - name: ascii_punct
+    states: [ 。，, ．， ]
+  - name: simplification
+    states: [ 漢字, 汉字 ]
+  - name: full_shape
+    states: [ 半角, 全角 ]
+
+engine:
+  processors:
+    - ascii_composer
+    - recognizer
+    - key_binder
+    - speller
+    - punctuator
+    - selector
+    - navigator
+    - express_editor
+  segmentors:
+    - ascii_segmentor
+    - matcher
+    - affix_segmentor@mandarin_reverse_lookup
+    - affix_segmentor@pinyin_reverse_lookup
+    - abc_segmentor
+    - punct_segmentor
+    - fallback_segmentor
+  translators:
+    - punct_translator
+    - script_translator
+    - reverse_lookup_translator@mandarin_reverse_lookup
+    - reverse_lookup_translator@pinyin_reverse_lookup
+    # - reverse_lookup_translator
+  filters:
+    - simplifier
+    - uniquifier
+ 
+speller:
+  alphabet: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*-"
+  initials: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+  #  finals: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*"
+  delimiter: "  "
+  use_space: false
+  auto_select: false
+  algebra:
+    # - "erase/^xx$/"
+    # - "xform/[890]//" # 去掉聲調
+    # 不能單獨去掉聲調，會導致索引失效。只能手動等價。
+    - derive/([a-zA-Z])!/$1/
+    - derive/([a-zA-Z])@/$1/
+    - derive/([a-zA-Z])#/$1/
+    - derive/([a-zA-Z])\$/$1/
+    - derive/([a-zA-Z])%/$1/
+    - derive/([a-zA-Z])\^/$1/
+    - derive/([a-zA-Z])&/$1/
+    - derive/([a-zA-Z])\*/$1/
+    
+    # 變體輸入和口音兼容
+    - derive/^ch/tsh/
+    - derive/^q/kh/
+    - derive/^z/j/
+    - derive/au/ao/
+    - derive/ua/oa/
+    - derive/ue/oe/
+    - derive/ur/ir/
+    - derive/^(a|o)w/$1unn/
+    - derive/^w(a|e|i|ai)/u$1nn/
+    - derive/iam(!|@|#|%|\^|&|)$/iem$1/
+    - derive/^n(iem|iam|am)(!|@|#|%|\^|&|)$/l$1$2/ # n,l
+    - derive/iap(\$|\*|)$/iep$1/
+    - derive/iau(!|@|#|%|\^|&|\$|\*|)$/iou$1/
+    - derive/ua(n|t|d)(!|@|#|%|\^|&|\$|\*|)$/ue$1$2/
+    - derive/ie(h|x|)(!|@|#|%|\^|&|\$|\*|)$/io$1$2/
+    - derive/ia(n|t|d)(!|@|#|%|\^|&|\$|\*|)$/ie$1$2/
+    - derive/ye(!|@|#|%|\^|&|\$|\*|)$/yo$1/
+    - derive/y(a|e|o|u)(!|@|#|%|\^|&|\$|\*|)$/i$1nn$2/
+    - derive/yi(!|@|#|%|\^|&|\$|\*|)$/inn$1/
+    - derive/oy(!|@|#|%|\^|&|\$|\*|)$/ay$1/
+    - derive/(a|o)y(!|@|#|%|\^|&|\$|\*|)$/$1inn$2/
+    - derive/r(!|@|#|%|\^|&|\$|\*|)$/nn$1/
+    - derive/^(m|n|ng)(a|o)y(!|@|#|%|\^|&|\$|\*|)$/$1$2i$3/
+    - derive/^(m|n|ng)yi(!|@|#|%|\^|&|\$|\*|)$/$1i/
+    - derive/^(m|n|ng)y(a|e|o|u)(!|@|#|%|\^|&|\$|\*|)$/$1i$2$3/
+    - derive/^(m|n|ng)(a|o)w(!|@|#|%|\^|&|\$|\*|)$/$1$2u$3/
+    - derive/^(m|n|ng)w(a|o|i|ai)(!|@|#|%|\^|&|\$|\*|)$/$1u$2$3/
+    - derive/^(m|n|ng)(a|o)y(!|@|#|%|\^|&|\$|\*|)$/$1$2inn$3/
+    - derive/^(m|n|ng)yi(!|@|#|%|\^|&|\$|\*|)$/$1inn$2/
+    - derive/^(m|n|ng)y(a|e|o|u)(!|@|#|%|\^|&|\$|\*|)$/$1i$2nn$3/
+    - derive/^(m|n|ng)(a|o)w(!|@|#|%|\^|&|\$|\*|)$/$1$2unn$3/
+    - derive/^(m|n|ng)w(a|o|i|ai)(!|@|#|%|\^|&|\$|\*|)$/$1u$2nn$3/
+    - derive/m(!|@|#|%|\^|&|\$|\*|)$/ng$1/
+    - derive/m(!|@|#|%|\^|&|\$|\*|)$/n$1/
+    - derive/n(!|@|#|%|\^|&|\$|\*|)$/ng$1/
+    - derive/b(\*|)$/g$1/
+    - derive/p(\$|)$/k$1/
+    - derive/b(\*|)$/d$1/
+    - derive/p(\$|)$/t$1/
+    - derive/d(\*|)$/g$1/
+    - derive/t(\$|)$/k$1/
+    # 大小寫兼容
+    - derive/a/A/
+    - derive/b/B/
+    - derive/c/C/
+    - derive/d/D/
+    - derive/e/E/
+    - derive/f/F/
+    - derive/g/G/
+    - derive/h/H/
+    - derive/i/I/
+    - derive/j/J/
+    - derive/k/K/
+    - derive/l/L/
+    - derive/m/M/
+    - derive/n/N/
+    - derive/o/O/
+    - derive/p/P/
+    - derive/q/Q/
+    - derive/r/R/
+    - derive/s/S/
+    - derive/t/T/
+    - derive/u/U/
+    - derive/v/V/
+    - derive/w/W/
+    - derive/x/X/
+    - derive/y/Y/
+    - derive/z/Z/
+    - derive/A/a/
+    - derive/B/b/
+    - derive/C/c/
+    - derive/D/d/
+    - derive/E/e/
+    - derive/F/f/
+    - derive/G/g/
+    - derive/H/h/
+    - derive/I/i/
+    - derive/J/j/
+    - derive/K/k/
+    - derive/L/l/
+    - derive/M/m/
+    - derive/N/n/
+    - derive/O/o/
+    - derive/P/p/
+    - derive/Q/q/
+    - derive/R/r/
+    - derive/S/s/
+    - derive/T/t/
+    - derive/U/u/
+    - derive/V/v/
+    - derive/W/w/
+    - derive/X/x/
+    - derive/Y/y/
+    - derive/Z/z/
+    - derive/b\*$/p*/
+    - derive/d\*$/t*/
+    - derive/g\*$/k*/
+    - derive/x\*$/h*/
+    # - derive/(a|o|e|i|u|ur)x\*$/*/
+    - derive/p\$$/b\$/
+    - derive/t\$$/d\$/
+    - derive/k\$$/g\$/
+    - derive/h\$$/x\$/
+    # - derive/(a|o|e|i|u|ur)h\$$/$/
+    - abbrev/^([a-z-]).+$/$1/ # 簡拼
+    - abbrev/^(ph|th|ts|ch|ng|ur).+$/$1/ # 簡拼
+
+translator:
+  dictionary: romazi
+  spelling_hints: 10  # 10字內標註完整帶調音碼
+  prism: romazi_han
+  enable_sentence: false
+  enable_completion: false
+  enable_user_dict: true
+  comment_format:
+    - xform/!/¹/
+    - xform/@/²/
+    - xform/#/³/
+    - xform/\$/⁴/
+    - xform/%/⁵/
+    - xform/\^/⁶/
+    - xform/&/⁷/
+    - xform/\*/⁸/
+  preedit_format:
+    - xform/a((r|i|u|y|w|m|n|ng|R|I|U|Y|W|M|N|NG|Ng|nG)|)!/a$1/
+    - xform/a((r|i|u|y|w|m|n|ng|R|I|U|Y|W|M|N|NG|Ng|nG)|)@/á$1/
+    - xform/a((r|i|u|y|w|m|n|ng|R|I|U|Y|W|M|N|NG|Ng|nG)|)#/à$1/
+    - xform/a((r|R)(h|x|p|t|k|b|d|g|H|X|P|T|K|B|D|G)|)\$/a$1/
+    - xform/a((h|x|p|t|k|b|d|g|H|X|P|T|K|B|D|G)|)\$/a$1/
+    - xform/a((r|i|u|y|w|m|n|ng|R|I|U|Y|W|M|N|NG|Ng|nG)|)%/â$1/
+    - xform/a((r|i|u|y|w|m|n|ng|R|I|U|Y|W|M|N|NG|Ng|nG)|)\^/ǎ$1/
+    - xform/a((r|i|u|y|w|m|n|ng|R|I|U|Y|W|M|N|NG|Ng|nG)|)&/ā$1/
+    - xform/a((r|R)(h|x|p|t|k|b|d|g|H|X|P|T|K|B|D|G)|)\*/a$1/
+    - xform/a((h|x|p|t|k|b|d|g|H|X|P|T|K|B|D|G)|)\*/a$1/
+    - xform/A((r|i|u|y|w|m|n|ng|R|I|U|Y|W|M|N|NG|Ng|nG)|)!/A$1/
+    - xform/A((r|i|u|y|w|m|n|ng|R|I|U|Y|W|M|N|NG|Ng|nG)|)@/Á$1/
+    - xform/A((r|i|u|y|w|m|n|ng|R|I|U|Y|W|M|N|NG|Ng|nG)|)#/À$1/
+    - xform/A((r|R)(h|x|p|t|k|b|d|g|H|X|P|T|K|B|D|G)|)\$/A$1/
+    - xform/A((h|x|p|t|k|b|d|g|H|X|P|T|K|B|D|G)|)\$/A$1/
+    - xform/A((r|i|u|y|w|m|n|ng|R|I|U|Y|W|M|N|NG|Ng|nG)|)%/Â$1/
+    - xform/A((r|i|u|y|w|m|n|ng|R|I|U|Y|W|M|N|NG|Ng|nG)|)\^/Ǎ$1/
+    - xform/A((r|i|u|y|w|m|n|ng|R|I|U|Y|W|M|N|NG|Ng|nG)|)&/Ā$1/
+    - xform/A((r|R)(h|x|p|t|k|b|d|g|H|X|P|T|K|B|D|G)|)\*/A$1/
+    - xform/A((h|x|p|t|k|b|d|g|H|X|P|T|K|B|D|G)|)\*/A$1/
+
+    - xform/o((r|i|u|y|w|m|n|ng|R|I|U|Y|W|M|N|NG|Ng|nG)|)!/o$1/
+    - xform/o((r|i|u|y|w|m|n|ng|R|I|U|Y|W|M|N|NG|Ng|nG)|)@/ó$1/
+    - xform/o((r|i|u|y|w|m|n|ng|R|I|U|Y|W|M|N|NG|Ng|nG)|)#/ò$1/
+    - xform/o((r|R)(h|x|p|t|k|b|d|g|H|X|P|T|K|B|D|G)|)\$/o$1/
+    - xform/o((h|x|p|t|k|b|d|g|H|X|P|T|K|B|D|G)|)\$/o$1/
+    - xform/o((r|i|u|y|w|m|n|ng|R|I|U|Y|W|M|N|NG|Ng|nG)|)%/ô$1/
+    - xform/o((r|i|u|y|w|m|n|ng|R|I|U|Y|W|M|N|NG|Ng|nG)|)\^/ǒ$1/
+    - xform/o((r|i|u|y|w|m|n|ng|R|I|U|Y|W|M|N|NG|Ng|nG)|)&/ō$1/
+    - xform/o((r|R)(h|x|p|t|k|b|d|g|H|X|P|T|K|B|D|G)|)\*/o$1/
+    - xform/o((h|x|p|t|k|b|d|g|H|X|P|T|K|B|D|G)|)\*/o$1/
+    - xform/O((r|i|u|y|w|m|n|ng|R|I|U|Y|W|M|N|NG|Ng|nG)|)!/O$1/
+    - xform/O((r|i|u|y|w|m|n|ng|R|I|U|Y|W|M|N|NG|Ng|nG)|)@/Ó$1/
+    - xform/O((r|i|u|y|w|m|n|ng|R|I|U|Y|W|M|N|NG|Ng|nG)|)#/Ò$1/
+    - xform/O((r|R)(h|x|p|t|k|b|d|g|H|X|P|T|K|B|D|G)|)\$/O$1/
+    - xform/O((h|x|p|t|k|b|d|g|H|X|P|T|K|B|D|G)|)\$/O$1/
+    - xform/O((r|i|u|y|w|m|n|ng|R|I|U|Y|W|M|N|NG|Ng|nG)|)%/Ô$1/
+    - xform/O((r|i|u|y|w|m|n|ng|R|I|U|Y|W|M|N|NG|Ng|nG)|)\^/Ǒ$1/
+    - xform/O((r|i|u|y|w|m|n|ng|R|I|U|Y|W|M|N|NG|Ng|nG)|)&/Ō$1/
+    - xform/O((r|R)(h|x|p|t|k|b|d|g|H|X|P|T|K|B|D|G)|)\*/O$1/
+    - xform/O((h|x|p|t|k|b|d|g|H|X|P|T|K|B|D|G)|)\*/O$1/
+
+    - xform/e((r|i|u|y|w|m|n|ng|R|I|U|Y|W|M|N|NG|Ng|nG)|)!/e$1/
+    - xform/e((r|i|u|y|w|m|n|ng|R|I|U|Y|W|M|N|NG|Ng|nG)|)@/é$1/
+    - xform/e((r|i|u|y|w|m|n|ng|R|I|U|Y|W|M|N|NG|Ng|nG)|)#/è$1/
+    - xform/e((r|R)(h|x|p|t|k|b|d|g|H|X|P|T|K|B|D|G)|)\$/e$1/
+    - xform/e((h|x|p|t|k|b|d|g|H|X|P|T|K|B|D|G)|)\$/e$1/
+    - xform/e((r|i|u|y|w|m|n|ng|R|I|U|Y|W|M|N|NG|Ng|nG)|)%/ê$1/
+    - xform/e((r|i|u|y|w|m|n|ng|R|I|U|Y|W|M|N|NG|Ng|nG)|)\^/ě$1/
+    - xform/e((r|i|u|y|w|m|n|ng|R|I|U|Y|W|M|N|NG|Ng|nG)|)&/ē$1/
+    - xform/e((r|R)(h|x|p|t|k|b|d|g|H|X|P|T|K|B|D|G)|)\*/e$1/
+    - xform/e((h|x|p|t|k|b|d|g|H|X|P|T|K|B|D|G)|)\*/e$1/
+    - xform/E((r|i|u|y|w|m|n|ng|R|I|U|Y|W|M|N|NG|Ng|nG)|)!/E$1/
+    - xform/E((r|i|u|y|w|m|n|ng|R|I|U|Y|W|M|N|NG|Ng|nG)|)@/É$1/
+    - xform/E((r|i|u|y|w|m|n|ng|R|I|U|Y|W|M|N|NG|Ng|nG)|)#/È$1/
+    - xform/E((r|R)(h|x|p|t|k|b|d|g|H|X|P|T|K|B|D|G)|)\$/E$1/
+    - xform/E((h|x|p|t|k|b|d|g|H|X|P|T|K|B|D|G)|)\$/E$1/
+    - xform/E((r|i|u|y|w|m|n|ng|R|I|U|Y|W|M|N|NG|Ng|nG)|)%/Ê$1/
+    - xform/E((r|i|u|y|w|m|n|ng|R|I|U|Y|W|M|N|NG|Ng|nG)|)\^/Ě$1/
+    - xform/E((r|i|u|y|w|m|n|ng|R|I|U|Y|W|M|N|NG|Ng|nG)|)&/Ē$1/
+    - xform/E((r|R)(h|x|p|t|k|b|d|g|H|X|P|T|K|B|D|G)|)\*/E$1/
+    - xform/E((h|x|p|t|k|b|d|g|H|X|P|T|K|B|D|G)|)\*/E$1/
+
+    - xform/i((m|n|ng|M|N|NG|Ng|nG)|)!/i$1/
+    - xform/i((m|n|ng|M|N|NG|Ng|nG)|)@/í$1/
+    - xform/i((m|n|ng|M|N|NG|Ng|nG)|)#/ì$1/
+    - xform/i((h|x|p|t|k|b|d|g|H|X|P|T|K|B|D|G)|)\$/i$1/
+    - xform/i((m|n|ng|M|N|NG|Ng|nG)|)%/î$1/
+    - xform/i((m|n|ng|M|N|NG|Ng|nG)|)\^/ǐ$1/
+    - xform/i((m|n|ng|M|N|NG|Ng|nG)|)&/ī$1/
+    - xform/i((h|x|p|t|k|b|d|g|H|X|P|T|K|B|D|G)|)\*/i$1/
+    - xform/I((m|n|ng|M|N|NG|Ng|nG)|)!/I$1/
+    - xform/I((m|n|ng|M|N|NG|Ng|nG)|)@/Í$1/
+    - xform/I((m|n|ng|M|N|NG|Ng|nG)|)#/Ì$1/
+    - xform/I((h|x|p|t|k|b|d|g|H|X|P|T|K|B|D|G)|)\$/I$1/
+    - xform/I((m|n|ng|M|N|NG|Ng|nG)|)%/Î$1/
+    - xform/I((m|n|ng|M|N|NG|Ng|nG)|)\^/Ǐ$1/
+    - xform/I((m|n|ng|M|N|NG|Ng|nG)|)&/Ī$1/
+    - xform/I((h|x|p|t|k|b|d|g|H|X|P|T|K|B|D|G)|)\*/I$1/
+
+    - xform/u((m|n|ng|M|N|NG|Ng|nG)|)!/u$1/
+    - xform/u((m|n|ng|M|N|NG|Ng|nG)|)@/ú$1/
+    - xform/u((m|n|ng|M|N|NG|Ng|nG)|)#/ù$1/
+    - xform/u((h|x|p|t|k|b|d|g|H|X|P|T|K|B|D|G)|)\$/u$1/
+    - xform/u((m|n|ng|M|N|NG|Ng|nG)|)%/û$1/
+    - xform/u((m|n|ng|M|N|NG|Ng|nG)|)\^/ǔ$1/
+    - xform/u((m|n|ng|M|N|NG|Ng|nG)|)&/ū$1/
+    - xform/u((h|x|p|t|k|b|d|g|H|X|P|T|K|B|D|G)|)\*/u$1/
+    - xform/U((m|n|ng|M|N|NG|Ng|nG)|)!/U$1/
+    - xform/U((m|n|ng|M|N|NG|Ng|nG)|)@/Ú$1/
+    - xform/U((m|n|ng|M|N|NG|Ng|nG)|)#/Ù$1/
+    - xform/U((h|x|p|t|k|b|d|g|H|X|P|T|K|B|D|G)|)\$/U$1/
+    - xform/U((m|n|ng|M|N|NG|Ng|nG)|)%/Û$1/
+    - xform/U((m|n|ng|M|N|NG|Ng|nG)|)\^/Ǔ$1/
+    - xform/U((m|n|ng|M|N|NG|Ng|nG)|)&/Ū$1/
+    - xform/U((h|x|p|t|k|b|d|g|H|X|P|T|K|B|D|G)|)\*/U$1/
+
+    - xform/u((r|R)(m|n|ng|M|N|NG|Ng|nG|))!/u$1/
+    - xform/u((r|R)(m|n|ng|M|N|NG|Ng|nG|))@/ú$1/
+    - xform/u((r|R)(m|n|ng|M|N|NG|Ng|nG|))#/ù$1/
+    - xform/u((r|R)(h|x|p|t|k|b|d|g|H|X|P|T|K|B|D|G|))\$/u$1/
+    - xform/u((r|R)(m|n|ng|M|N|NG|Ng|nG|))%/û$1/
+    - xform/u((r|R)(m|n|ng|M|N|NG|Ng|nG|))\^/ǔ$1/
+    - xform/u((r|R)(m|n|ng|M|N|NG|Ng|nG|))&/ū$1/
+    - xform/u((r|R)(h|x|p|t|k|b|d|g|H|X|P|T|K|B|D|G|))\*/u$1/
+    - xform/U((r|R)(m|n|ng|M|N|NG|Ng|nG|))!/U$1/
+    - xform/U((r|R)(m|n|ng|M|N|NG|Ng|nG|))@/Ú$1/
+    - xform/U((r|R)(m|n|ng|M|N|NG|Ng|nG|))#/Ù$1/
+    - xform/U((r|R)(h|x|p|t|k|b|d|g|H|X|P|T|K|B|D|G|))\$/U$1/
+    - xform/U((r|R)(m|n|ng|M|N|NG|Ng|nG|))%/Û$1/
+    - xform/U((r|R)(m|n|ng|M|N|NG|Ng|nG|))\^/Ǔ$1/
+    - xform/U((r|R)(m|n|ng|M|N|NG|Ng|nG|))&/Ū$1/
+    - xform/U((r|R)(h|x|p|t|k|b|d|g|H|X|P|T|K|B|D|G|))\*/U$1/
+
+    - xform/m!/m/ 
+    - xform/m@/ḿ/
+    - xform/m#/m̀/
+    - xform/m((h|x|p|t|k|b|d|g|H|X|P|T|K|B|D|G)|)\$/m$1/
+    - xform/m%/m̂/
+    - xform/m\^/m̌/
+    - xform/m&/m̄/
+    - xform/m((h|x|p|t|k|b|d|g|H|X|P|T|K|B|D|G)|)\*/m$1/
+    - xform/M!/M/
+    - xform/M@/Ḿ/
+    - xform/M#/M̀/
+    - xform/M((h|x|p|t|k|b|d|g|H|X|P|T|K|B|D|G)|)\$/M$1/
+    - xform/M%/M̂/
+    - xform/M\^/M̌/
+    - xform/M&/M̄/
+    - xform/M((h|x|p|t|k|b|d|g|H|X|P|T|K|B|D|G)|)\*/M$1/
+
+    - xform/n(g|G)!/n$1/
+    - xform/n(g|G)@/ń$1/
+    - xform/n(g|G)#/ǹ$1/
+    - xform/n((g|G)(h|x|p|t|k|b|d|g|H|X|P|T|K|B|D|G)|)\$/n$1/
+    - xform/n(g|G)%/n̂$1/
+    - xform/n(g|G)\^/ň$1/
+    - xform/n(g|G)&/n̄$1/
+    - xform/n((g|G)(h|x|p|t|k|b|d|g|H|X|P|T|K|B|D|G)|)\*/n$1/
+    - xform/N(g|G)!/N$1/
+    - xform/N(g|G)@/Ń$1/
+    - xform/N(g|G)#/Ǹ$1/
+    - xform/N((g|G)(h|x|p|t|k|b|d|g|H|X|P|T|K|B|D|G)|)\$/N$1/
+    - xform/N(g|G)%/N̂$1/
+    - xform/N(g|G)\^/Ň$1/
+    - xform/N(g|G)&/N̄$1/
+    - xform/N((g|G)(h|x|p|t|k|b|d|g|H|X|P|T|K|B|D|G)|)\*/N$1/
+  # initial_quality: 0.5
+
+recognizer:
+  # import_preset: default
+  patterns:
+    punct: "^/([0-9]0?|[a-z]+)$"
+    pinyin_lookup: "^`[a-z]*'?$"
+
+pinyin_reverse_lookup:
+  tag: pinyin_lookup
+  dictionary: luna_pinyin
+  prefix: "`"
+  suffix: "'"
+  tips: "〔拼音〕"
+  enable_completion: false
+  enable_sentence: false
+  preedit_format:
+    - xform/([nljqxy])v/$1ü/
+  comment_format:
+    - xform/!/¹/
+    - xform/@/²/
+    - xform/#/³/
+    - xform/\$/⁴/
+    - xform/%/⁵/
+    - xform/\^/⁶/
+    - xform/&/⁷/
+    - xform/\*/⁸/
+ 
+punctuator:
+  import_preset: default
+
+key_binder:
+  import_preset: default # 要引入才能翻页 
+  bindings:
+    - when: paging    # 僅當已發生向後換頁時，
+      accept: KP_Page_Up
+      send: Prior
+ 
+    - when: has_menu  # 只要有候選字即滿足條件
+      accept: KP_Page_Down 
+      send: Next
+ 
+    - when: composing
+      accept: KP_1
+      send: exclam
+
+    - when: composing
+      accept: KP_2
+      send: at
+ 
+    - when: composing
+      accept: KP_3
+      send: numbersign
+
+    - when: composing
+      accept: KP_4
+      send: dollar
+
+    - when: composing
+      accept: KP_5
+      send: percent
+
+    - when: composing
+      accept: KP_6
+      send: asciicircum
+
+    - when: composing
+      accept: KP_7
+      send: ampersand
+
+    - when: composing
+      accept: KP_8
+      send: asterisk
+
+    - when: composing
+      accept: KP_Subtract
+      send: minus
+
+menu:
+  page_size: 8
+  alternative_select_keys: "12345678"
+
+style:
+  horizontal: false
+  candidate_list_layout: linear
+
