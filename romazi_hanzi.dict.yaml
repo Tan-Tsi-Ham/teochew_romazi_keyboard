@@ -1,0 +1,162 @@
+# Rime dictionary
+# encoding: utf-8
+#
+# Teochew romazi input
+# 修改自 https://github.com/hokkien-writing/rime-teochew
+# 修改部分拼寫、新增聲調查字
+# 修改部分内容
+#
+---
+name:	romazi_hanzi
+version:	"2026.02.18"
+sort:	by_weight
+use_preset_vocabulary:	true
+...
+巴摩	pa! mo%
+巴浪	pa! lang!
+巴礼	pa! loi=
+巴刹	pa! sat$
+霸道	pa# tau^
+班級	pan! qip$
+版本	pan= pun=
+別人	pad* nang%
+別個	pad* kai%
+別塊	pad* ko#
+別日	pad* zid*
+幫助	pang! tso^
+榜樣	pang= ye&
+放掉	pang# tiau&
+放囝	pang# kya=
+放暇	pang# he^
+腹肌	pak$ ki!
+剝削	pak$ siah$
+輻射	pak siā
+房間	pang% koy!
+房內	pang% lai^
+擺睬	pai= chai=
+擺雅	pai= ngia=
+排比	pai% pi=
+排名	pai% mya%
+排球	pai% kiu%
+排回	pai% hue%
+敗家	pai& ke!
+爆爆	pauh$ pauh$
+曝光	pau^ kuang!
+暴力	pau^ lag*
+爆炸	pau^ tsa#
+暴躁	pau^ chau#
+玻璃	po! li%
+保庇	po= pi#
+保齡球	po= leng% kiu%
+保證	po= tseng#
+保護	po= ho&
+保護	po= hu^
+報名	po# mya%
+報道	po# tau^
+報紙	po# tsua=
+報仇	po# chiu%
+薄餅	pox* pya=
+薄皮	pox* phue%
+薄殼	pox* qak$
+薄殼米	pox* qak$ bi=
+八角	poih$ kak$
+反烏反白	poy= ou! poy= pex*
+斧頭	pou= thau%
+補充	pou= chong!
+部首	pou^ siu=
+部分	pou^ hun&
+百合	peh$ hax*
+掰喉	peh$ au%
+掰喉掰舌	peh$ au% peh$ tsix*
+白胕	pex* pu^
+白豬肉	pex* tur! neg*
+白糖	pex* thng%
+白鐵	pex* thih$
+白鷺鷥	pex* liau& si!
+白果	pex* kue=
+白䭕	pex* tsya=
+白菜	pex* chai#
+白仁	pex* zin%
+白蟻	pex* hia^
+白鉛	pex* in%
+白話	pex* ue&
+白話字	pex* ue& zi&
+平家	per% ke!
+平齊	per% tsoy%
+平樣	per% ye&
+病毒	per& tag*
+燷着	peng! tiex*
+煏過火	pek$ kue# hue=
+愊惻	pek$ chek$
+蚍蛘	pi! iang%
+比賽	pi= sai#
+蜱蛢	pi% pang%
+琵琶	pi% pe%
+枇杷	pi% pe%
+啤酒	pi% tsiu=
+啤酒罐	pi% tsiu= kuan#
+啤酒樽	pi% tsiu= tsun!
+被告	pi^ ko#
+變變	pyi# pyi#
+變面	pyi# min&
+變形	pyi# heng%
+品質	pin= tsieh$
+筆記	pit$ ki#
+筆蓋	pit$ qoy#
+必須	pit$ su!
+筆盒	pit$ ab*
+筆劃	pit$ uex*
+䘃婆	pid* po%
+畢業	pid* ngiab*
+乒乓	ping! pong%
+乒乓球	ping! pong% -kiu%
+冰糖	pya! thng%
+冰淇淋	pya! qi% lim%
+冰箱	pya! sye!
+餅痞	pya= phi=
+餅干	pya= kwa!
+餅藥	pya= iex*
+拚駁	pya# poh$
+拚拍	pya# phah$
+拚命	pya# mya&
+變身	pian# sin!
+變形	pian# heng%
+便利	pian^ li^
+表面	piau= min&
+表達	piau= tad*
+表情	piau= cheng%
+表示	piau= si&
+表現	piau= hin&
+表演	piau= in%
+表揚	piau= iang%
+飆車	pie! chia!
+表妹	pie= mue^
+表弟	pie= ti^
+表姐	pie= tse=
+表兄	pie= hya!
+漂白	pie# pex*
+漂白粉	pie# pex* hun=
+富翁	pu# ong!
+孵膿	pu& lang%
+本來	pun= lai%
+本事	pun= sur&
+畚斗	pun# tau=
+糞桶	pun# thang=
+畚箕	pun# ki!
+不管	put$ kuan=
+不准	put$ tsun=
+播出	pua# chut$
+跋杯	puax* pue!
+半桶屎	pwa# thang= sai=
+半旰	pwa# kua#
+半橛	pwa# kuex*
+扮騷	puan^ sau!
+拔河	puad* ho%
+菠薐	pue! leng%
+飛機	pue! ki!
+背誦	pue# song^
+陪伴	pue% phwa^
+賠償	pue% sye%
+培養	pue% iang=
+悲慘	pui! cham=
+拍拚	phah$ pya#

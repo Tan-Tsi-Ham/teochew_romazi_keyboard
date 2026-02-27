@@ -1,0 +1,288 @@
+# Rime dictionary
+# encoding: utf-8
+#
+# Teochew romazi input
+# 修改自 https://github.com/hokkien-writing/rime-teochew
+# 修改部分拼寫、新增聲調查字
+# 修改部分内容
+#
+---
+name:	romazi_words
+version:	"2026.02.18"
+sort:	by_weight
+use_preset_vocabulary:	true
+...
+a	e!
+A	e!
+b	bi!
+B	bi!
+c	si!
+C	si!
+d	ti!
+D	ti!
+e	i!
+E	i!
+f	e= hu&
+F	e= hu&
+g	zi!
+G	zi!
+h	eg* chuh$
+H	eg* chuh&
+i	ai!
+I	ai!
+j	tse!
+J	tse!
+k	qer!
+K	qer!
+l	e= lurh$
+L	e= lurh$
+m	em!
+M	em!
+n	en!
+N	en!
+o	ou!
+O	ou!
+p	phi!
+P	phi!
+q	qiu!
+Q	qiu!
+r	a= lurh$
+R	a= lurh$
+s	e^ surh$
+S	e^ surh$
+t	thi!
+T	thi!
+u	iu!
+U	iu!
+v	bui!
+V	bui!
+w	tab* liu&
+W	tab* liu&
+x	eg* surh$
+X	eg* surh$
+y	uai!
+Y	uai!
+z	zeh$
+Z	zeh$
+J	teng!
+Q	qou!
+K	qer%
+√	kiauh$
+×	qiag*
+↑	teng=
+↓	e^
+←	tso=
+→	iu^
+ok	ok
+yes	yes
+no	no
+yeah	yeah
+oops	oops
+，	tau& ho&
+。	ku# ho&
+？	mng& ho&
+！	kam= tham#
+……	ser= liag*
+0	leng%
+0	qang#
+1	tseg*
+1	it$
+2	no^
+2	zi^
+3	sar!
+4	si#
+5	ngou^
+6	lag*
+7	chit$
+8	poih$
+9	kau=
+⓪	leng%
+①	it!
+②	zi^
+③	sar!
+④	si#
+⑤	ngou^
+⑥	lag*
+⑦	chit$
+⑧	poih$
+⑨	kau=
+.	tiam=
++	kia!
+-	kiam=
+×	seng%
+÷	tur%
+=	teng=
+/	pi=
+%	pa! sian!
+%	peh$ hun!
+=	at
+«»	in= ho&
+「」	in= ho&
+『』	in= ho&
+“”	in= ho&
+‘’	in= ho&
+（）	kuat$ hu%
+《》	tsur! mya%
+>	tua&
+<	soi#
+&	kah$
+⿰	tso= iu^
+⿱	teng= e^
+⿲	tso= tong! iu^
+⿳	teng= tong! e^
+⿹	iu^ tsye^ pau!
+⿸	tso= tsye^ pau!
+⿺	tso= e^ pau!
+⿵	tsye^ pau!
+⿶	e^ pau!
+⿷	tso= pau!
+⿴	chuan% pau!
+⿻	sie! ngang#
+按呢	a! ne!
+pa-mô	pa! - mo%
+pa-lang	pa! - lang!
+pa-lói	pa! - loi=
+pasar	pa! - sat$
+pà-tǎu	pa# - tau^
+pan-qip	pan! - qip$
+pán-pún	pan= - pun=
+pad-nâng	pad* - nang%
+pad-kâi	pad* - kai%
+pad-kò	pad* - ko#
+pad-zid	pad* - zid*
+pang-tsǒ	pang! - tso^
+páng-yē	pang= - ye&
+pàng-tiāu	pang# - tiau&
+pàng-kyá	pang# - kya=
+pàng-hě	pang# - he^
+pak-ki	pak$ - ki!
+pak-siah	pak$ - siah$
+pak-siā	pak - siā
+pâng-koy	pang% - koy!
+pâng-lǎi	pang% - lai^
+pái-chái	pai= - chai=
+pái-ngiá	pai= - ngia=
+pâi-pí	pai% - pi=
+pâi-myâ	pai% - mya%
+pâi-kiû	pai% - kiu%
+pâi-huê	pai% - hue%
+pāi-ke	pai& - ke!
+pauh-pauh	pauh$ - pauh$
+pǎu-kuang	pau^ - kuang!
+pǎu-lag	pau^ - lag*
+pǎu-tsà	pau^ - tsa#
+pǎu-chàu	pau^ - chau#
+po-lî	po! - li%
+pó-pì	po= - pi#
+pó-lêng-kiû	po= - leng% - kiu%
+pó-tsèng	po= - tseng#
+pó-hō	po= - ho&
+pó-hǔ	po= - hu^
+pò-myâ	po# - mya%
+pò-tǎu	po# - tau^
+pò-tsuá	po# - tsua=
+pò-chiû	po# - chiu%
+pox-pyá	pox* - pya=
+pox-phuê	pox* - phue%
+pox-qak	pox* - qak$
+pox-qak-bí	pox* - qak$ - bi=
+poih-kak	poih$ - kak$
+póy-ouc-póy-pex	poy= - ou! - poy= - pex*
+póu-thâu	pou= - thau%
+póu-chong	pou= - chong!
+pǒu-siú	pou^ - siu=
+pǒu-hūn	pou^ - hun&
+peh-hax	peh$ - hax*
+peh-âu	peh$ - au%
+peh-âu-peh-tsix	peh$ - au% - peh$ - tsix*
+pex-pǔ	pex* - pu^
+pex-tur-neg	pex* - tur! - neg*
+pex-thn̂g	pex* - tng%
+pex-thih	pex* - thih$
+pex-liāu-si	pex* - liau& - si!
+pex-kué	pex* - kue=
+pex-tsyá	pex* - tsya=
+pex-chài	pex* - chai#
+pex-zîn	pex* - zin%
+pex-hiǎ	pex* - hia^
+pex-în	pex* - in%
+pex-uē	pex* - ue&
+pêh-uē-jī	pex* - ue& - zi&
+pêr-ke	per% - ke!
+pêr-tsôy	per% - tsoy%
+pêr-yē	per% - ye&
+pēr-tag	per& - tag*
+peng--tiex	peng! -- tiex*
+pek-kuè-hué	pek$ - kue# - hue=
+pek-chek	pek$ - chek$
+pi-iâng	pi! - iang%
+pí-sài	pi= - sai#
+pî-pâng	pi% - pang%
+pî-pê	pi% - pe%
+pî-tsiú	pi% - tsiu=
+pî-tsiú-kuàn	pi% - tsiu= - kuan#
+pî-tsiú-tsun	pi% - tsiu= - tsun!
+pǐ-kò	pi^ - ko#
+pyì-pyì	pyi# - pyi#
+pyì-mīn	pyi# - min&
+pyì-hêng	pyi# - heng%
+pín-tsieh	pin= - tsieh$
+pit-kì	pit$ - ki#
+pit-qòy	pit$ - qoy#
+pit-su	pit$ - su!
+pit-ab	pit$ - ab*
+pit-uex	pit$ - uex*
+pid-pô	pid* - po%
+pid-ngiab	pid* - ngiab*
+ping-pông	ping! - pong%
+ping-pông-kiû	ping! - pong% -kiu%
+pya-thn̂g	pya! - thng%
+pya-qî-lîm	pya! - qi% - lim%
+pya-sye	pya! - sye!
+pyá-phí	pya= - phi=
+pyá-kwa	pya= - kwa!
+pyá-iex	pya= - iex*
+pyà-poh	pya# - poh$
+pyà-phah	pya# - phah$
+pyà-myā	pya# - mya&
+piàn-sin	pian# - sin!
+piàn-hêng	pian# - heng%
+piǎn-lǐ	pian^ - li^
+piáu-mīn	piau= - min&
+piáu-tad	piau= - tad*
+piáu-chêng	piau= - cheng%
+piáu-sī	piau= - si&
+piáu-hīn	piau= - hin&
+piáu-în	piau= - in%
+piáu-iâng	piau= - iang%
+pie-chia	pie! - chia!
+pié-muě	pie= - mue^
+pié-tǐ	pie= - ti^
+pié-tsé	pie= - tse=
+pié-hya	pie= - hya!
+piè-pex	pie# - pex*
+piè-pex-hún	pie# - pex* - hun=
+pù-ong	pu# - ong!
+pū-lâng	pu& - lang%
+pún-lâi	pun= - lai%
+pún-sūr	pun= - sur&
+pùn-táu	pun# - tau=
+pùn-tháng	pun# - thang=
+pùn-ki	pun# - ki!
+put-kuán	put$ - kuan=
+put-tsún	put$ - tsun=
+puà-chut	pua# - chut$
+puax-pue	puax* - pue!
+pwà-tháng-sái	pwa# - thang= - sai=
+pwà-kuà	pwa# - kua#
+pwà-kuex	pwa# - kuex*
+puǎn-sau	puan^ - sau!
+puad-hô	puad* - ho%
+pue-lêng	pue! - leng%
+pue-ki	pue! - ki!
+puè-sǒng	pue# - song^
+puê-phwǎ	pue% - phwa^
+puê-syê	pue% - sye%
+puê-iáng	pue% - iang=
+pui-chám	pui! - cham=
+phah-pyà	phah$ - pya#
